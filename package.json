@@ -1,0 +1,31 @@
+{
+  "name": "js-data-validator",
+  "version": "0.1.0",
+  "description": "Javascript data validator",
+  "main": "index.js",
+  "scripts": {
+    "test": "semistandard && node_modules/.bin/tape 'test/**/*.js' | tap-summary"
+  },
+  "author": {
+    "name": "Alexey Gorokhov",
+    "email": "alexey.gorokhov@icloud.com",
+    "url": ""
+  },
+  "license": "MIT",
+  "keywords": [
+    "data validation"
+  ],
+  "homepage": "https://github.com/AlexeyGorokhov/js-data-validator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlexeyGorokhov/js-data-validator"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexeyGorokhov/js-data-validator/issues"
+  },
+  "devDependencies": {
+    "semistandard": "^9.2.1",
+    "tap-summary": "^3.0.1",
+    "tape": "^4.6.3"
+  }
+}
