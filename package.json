@@ -1,7 +1,7 @@
 {
   "name": "js-data-validator",
   "version": "0.1.0",
-  "description": "Javascript data validator",
+  "description": "Data validator and normalizer",
   "main": "index.js",
   "scripts": {
     "test": "semistandard && node_modules/.bin/tape 'test/**/*.js' | tap-summary"
@@ -13,7 +13,8 @@
   },
   "license": "MIT",
   "keywords": [
-    "data validation"
+    "validation",
+    "normalization"
   ],
   "homepage": "https://github.com/AlexeyGorokhov/js-data-validator",
   "repository": {
@@ -24,8 +25,13 @@
     "url": "https://github.com/AlexeyGorokhov/js-data-validator/issues"
   },
   "devDependencies": {
+    "proxyquire": "^1.7.11",
     "semistandard": "^9.2.1",
+    "sinon": "^1.17.7",
     "tap-summary": "^3.0.1",
     "tape": "^4.6.3"
+  },
+  "dependencies": {
+    "stampit": "^3.1.2"
   }
 }

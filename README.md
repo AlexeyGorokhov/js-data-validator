@@ -1,1 +1,92 @@
 # js-data-validator
+
+Data validator and normalizer
+
+## Introduction
+
+__Important Note:__ This is work in progress. Please, don't use it in production yet.
+
+This work is inspired by the awesome [joi](https://github.com/hapijs/joi) object schema validator.
+
+Why another validation module? Error messages! When validating incoming data data in an API endpoint, we would like to inform clients with custom meaningful messages describing what's wrong with there requests. There is no way to do that with joi.
+
+## Example
+
+```js
+const Jdv = require('js-data-validator');
+
+const schema = Jdv.object().keys({
+  userName: Jdv.string().required('my custom error message about missing "userName"'),
+  password: Jdv.string().required('my custom error message about missing "password"')
+                        .notEmpty('my custom error message about empty "password" '),
+  avatarUrl: Jdv.string().defaultsTo('http://example.com/avatars/default')
+});
+
+const data = {
+  userName: 'John Smith'
+};
+
+const { normalizedData, errors } = Jdv.validate(schema, data);
+
+if (errors.length) {
+  res.status(400).json({ errorMessages: errors.join(', ')});
+  return;
+}
+
+// Here start using normalizedData
+```
+
+## API Reference
+
+- [Jdv](#jdv)
+  - [`validate(schema, data)`](#validate)
+  - [`object()`](#object)
+    - [`object.keys(obj)`](#keys)
+      - [`object.key.required([msg])`](#object.key.required)
+      - [`object.key.defaultsTo([value])`](#object.key.defaultsTo)
+  - [`string()`](#string)
+    - [`string.notEmpty([msg])`](#notEmpty)
+
+### Jdv
+
+#### validate(schema, data)
+
+Validates `data` against `schema` and returns normalized data if the schema prescribes doing it. The method doesn't mutate passed `data`.
+
+* `schema {Object}` - validation schema.
+
+* `data {Any}` - data to be validated and normalized.
+
+#### object()
+
+Generates a schema to validate/normalize an object.
+
+##### object.keys(obj)
+
+Defines validation rules for object properties.
+
+* `obj {Object}` - Object where each key is assigned a validation schema.
+
+###### object.key.required([msg])
+
+Creates validation rule for a key to be present in the object.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+###### object.key.defaultsTo([value])
+
+Creates normalization rule for a missing property in the `data` object to be set to the specified value.
+
+* `value {Any}` - Optional. Value to be assigned to the missing property. Defaults to `null`.
+
+#### string()
+
+Generates a schema to validate/normalize a string.
+
+Any validated value is coerced to a string using `String` constructor function.
+
+##### string.notEmpty([msg])
+
+Creates validation rule for not allowing the string to be empty.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
