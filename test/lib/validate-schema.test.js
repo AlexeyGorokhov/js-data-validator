@@ -8,9 +8,11 @@ const moduleName = 'lib/validate-schema';
 
 const getSelf = ({
   validateObjectStub = () => {},
+  validateArrayStub = () => {},
   validateStringStub = () => {}
 }) => proxyquire(`../../${moduleName}`, {
   './validators/object': validateObjectStub,
+  './validators/array': validateArrayStub,
   './validators/string': validateStringStub
 });
 
@@ -22,6 +24,17 @@ test(`${moduleName} > called with "object" schema`, t => {
   self(schemaStub);
 
   t.equal(validateObjectStub.called, true, 'should invoke "object" validator');
+  t.end();
+});
+
+test(`${moduleName} > called with "array" schema`, t => {
+  const validateArrayStub = sinon.spy();
+  const schemaStub = { type: 'array' };
+  const self = getSelf({ validateArrayStub });
+
+  self(schemaStub);
+
+  t.equal(validateArrayStub.called, true, 'should invoke "array" validator');
   t.end();
 });
 

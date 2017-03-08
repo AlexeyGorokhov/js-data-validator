@@ -18,7 +18,7 @@ const Jdv = require('js-data-validator');
 const schema = Jdv.object().keys({
   userName: Jdv.string().required('my custom error message about missing "userName"'),
   password: Jdv.string().required('my custom error message about missing "password"')
-                        .notEmpty('my custom error message about empty "password" '),
+                        .notEmpty('my custom error message about empty "password"'),
   avatarUrl: Jdv.string().defaultsTo('http://example.com/avatars/default')
 });
 
@@ -44,6 +44,8 @@ if (errors.length) {
     - [`object.keys(obj)`](#keys)
       - [`object.key.required([msg])`](#object.key.required)
       - [`object.key.defaultsTo([value])`](#object.key.defaultsTo)
+  - [`array([opts])`](#array)
+    - [`array.notEmpty([msg])`]()
   - [`string()`](#string)
     - [`string.notEmpty([msg])`](#notEmpty)
 
@@ -78,6 +80,33 @@ Creates validation rule for a key to be present in the object.
 Creates normalization rule for a missing property in the `data` object to be set to the specified value.
 
 * `value {Any}` - Optional. Value to be assigned to the missing property. Defaults to `null`.
+
+#### array({ [schema], [msg] })
+
+Generates a schema to validate/normalize an array.
+
+* `opts {Object}` - Optional. Options:
+
+  * `schema {Object}` - Optional. Validation schema to be applied to each element of the array. If no schema passed, the array elements are not validated/normalized.
+
+  * `msg {String}` - Optional. Error message to be included in the returned errors collection in case the passed data is not an array. Defaults to an empty string.
+
+Example:
+
+```javascript
+const schema = Jdv.object().keys({
+  userNames: Jdv.array(
+    Jdv.string().notEmpty('my custom error message'),
+    'my custom error message for the case "userNames" is not an array'
+  ).notEmpty('my custom error message for the case "userNames" is an empty array')
+});
+```
+
+##### array.notEmpty([msg])
+
+Creates validation rule for not allowing the array to be empty.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
 
 #### string()
 
