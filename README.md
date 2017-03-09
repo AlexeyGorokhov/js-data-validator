@@ -22,18 +22,18 @@ const schema = Jdv.object().keys({
   avatarUrl: Jdv.string().defaultsTo('http://example.com/avatars/default')
 });
 
-const data = {
+const incomingData = {
   userName: 'John Smith'
 };
 
-const { normalizedData, errors } = Jdv.validate(schema, data);
+const { data, errors } = Jdv.validate(schema, incomingData);
 
 if (errors.length) {
   res.status(400).json({ errorMessages: errors.join(', ')});
   return;
 }
 
-// Here start using normalizedData
+// Here start using data
 ```
 
 ## API Reference
@@ -64,6 +64,12 @@ Validates `data` against `schema` and returns normalized data if the schema pres
 * `schema {Object}` - validation schema.
 
 * `data {Any}` - data to be validated and normalized.
+
+Returns `Object` with properties:
+
+* `data {Any}` - normalized data.
+
+* `errors {Array<String>}` - collection of error messages.
 
 #### object()
 
