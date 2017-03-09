@@ -38,16 +38,22 @@ if (errors.length) {
 
 ## API Reference
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
 - [Jdv](#jdv)
-  - [`validate(schema, data)`](#validate)
-  - [`object()`](#object)
-    - [`object.keys(obj)`](#keys)
-      - [`object.key.required([msg])`](#object.key.required)
-      - [`object.key.defaultsTo([value])`](#object.key.defaultsTo)
-  - [`array([opts])`](#array)
-    - [`array.notEmpty([msg])`]()
-  - [`string()`](#string)
-    - [`string.notEmpty([msg])`](#notEmpty)
+  - [validate(schema, data)](#validateschema-data)
+  - [object()](#object)
+    - [object.keys(obj)](#objectkeysobj)
+      - [object.key.required([msg])](#objectkeyrequiredmsg)
+      - [object.key.defaultsTo([value])](#objectkeydefaultstovalue)
+  - [array({ [schema], [msg] })](#array-schema-msg-)
+    - [array.notEmpty([msg])](#arraynotemptymsg)
+  - [string()](#string)
+    - [string.notEmpty([msg])](#stringnotemptymsg)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ### Jdv
 
