@@ -52,6 +52,9 @@ if (errors.length) {
     - [array.notEmpty([msg])](#arraynotemptymsg)
   - [string()](#string)
     - [string.notEmpty([msg])](#stringnotemptymsg)
+  - [integer([msg])](#integermsg)
+    - [integer.max(value, [msg])](#integermaxvalue-msg)
+    - [integer.min(value, [msg])](#integerminvalue-msg)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -129,5 +132,38 @@ Any validated value is coerced to a string using `String` constructor function.
 ##### string.notEmpty([msg])
 
 Creates validation rule for not allowing the string to be empty.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+#### integer([msg])
+
+Generates a schema to validate/normalize an integer value.
+
+Any validated value is tried to be parsed into an integer.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+Example:
+
+```javascript
+const schema = Jdv.integer('my custom error message in case the value is not an integer')
+                  .max(100, 'my custom error message in case it is greater')
+                  .max(0, 'my custom error message in case it is less');
+});
+```
+
+##### integer.max(value, [msg])
+
+Creates validation rule for a value to be less or equal to the passed maximum value.
+
+* `value {Integer}` - Maximum value to compare with.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+##### integer.min(value, [msg])
+
+Creates validation rule for a value to be greater or equal to the passed minimum value.
+
+* `value {Integer}` - Minimum value to compare with.
 
 * `msg {String}` - Optional error message. Defaults to an empty string.

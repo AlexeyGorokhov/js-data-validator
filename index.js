@@ -6,6 +6,7 @@ const validate = require('./lib/validate');
 const ObjectStamp = require('./lib/object');
 const ArrayStamp = require('./lib/array');
 const StringStamp = require('./lib/string');
+const IntegerStamp = require('./lib/integer');
 
 /**
  * Root exported object
@@ -14,7 +15,8 @@ module.exports = {
   validate,
   object,
   array,
-  string
+  string,
+  integer
 };
 
 function object () {
@@ -34,5 +36,12 @@ function array ({ schema = null, msg = '' } = {}) {
 function string () {
   return Object.assign(stampit().compose(StringStamp).create(), {
     type: 'string'
+  });
+}
+
+function integer (msg = '') {
+  return Object.assign(stampit().compose(IntegerStamp).create(), {
+    type: 'integer',
+    notIntegerErrorMessage: msg
   });
 }
