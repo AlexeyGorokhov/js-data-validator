@@ -110,10 +110,10 @@ Example:
 
 ```javascript
 const schema = Jdv.object().keys({
-  userNames: Jdv.array(
-    Jdv.string().notEmpty('my custom error message'),
-    'my custom error message for the case "userNames" is not an array'
-  ).notEmpty('my custom error message for the case "userNames" is an empty array')
+  userNames: Jdv.array({
+    schema: Jdv.string().notEmpty('my custom error message'),
+    msg: 'my custom error message for the case "userNames" is not an array'
+  }).notEmpty('my custom error message for the case "userNames" is an empty array')
 });
 ```
 

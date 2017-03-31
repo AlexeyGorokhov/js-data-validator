@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.3.1] - 2017-03-31
+
+### Fix
+
+* Fix documentation
+
 ## [0.3.0] - 217-03-23
 
 ### New features
