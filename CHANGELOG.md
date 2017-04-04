@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.4.0] - 217-04-04
+
+### New features
+
+* `boolean()` validation rule
+
 ## [0.3.1] - 2017-03-31
 
 ### Fix

@@ -7,6 +7,7 @@ const ObjectStamp = require('./lib/object');
 const ArrayStamp = require('./lib/array');
 const StringStamp = require('./lib/string');
 const IntegerStamp = require('./lib/integer');
+const BooleanStamp = require('./lib/boolean');
 
 /**
  * Root exported object
@@ -16,7 +17,8 @@ module.exports = {
   object,
   array,
   string,
-  integer
+  integer,
+  boolean
 };
 
 function object () {
@@ -43,5 +45,11 @@ function integer (msg = '') {
   return Object.assign(stampit().compose(IntegerStamp).create(), {
     type: 'integer',
     notIntegerErrorMessage: msg
+  });
+}
+
+function boolean () {
+  return Object.assign(stampit().compose(BooleanStamp).create(), {
+    type: 'boolean'
   });
 }

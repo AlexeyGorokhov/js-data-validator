@@ -10,12 +10,14 @@ const getSelf = ({
   validateObjectStub = () => {},
   validateArrayStub = () => {},
   validateStringStub = () => {},
-  validateIntegerStub = () => {}
+  validateIntegerStub = () => {},
+  validateBooleanStub = () => {}
 }) => proxyquire(`../../${moduleName}`, {
   './validators/object': validateObjectStub,
   './validators/array': validateArrayStub,
   './validators/string': validateStringStub,
-  './validators/integer': validateIntegerStub
+  './validators/integer': validateIntegerStub,
+  './validators/boolean': validateBooleanStub
 });
 
 test(`${moduleName} > called with "object" schema`, t => {
@@ -59,5 +61,16 @@ test(`${moduleName} > called with "integer" schema`, t => {
   self(schemaStub);
 
   t.equal(validateIntegerStub.called, true, 'should invoke "integer" validator');
+  t.end();
+});
+
+test(`${moduleName} > called with "boolean" schema`, t => {
+  const validateBooleanStub = sinon.spy();
+  const schemaStub = { type: 'boolean' };
+  const self = getSelf({ validateBooleanStub });
+
+  self(schemaStub);
+
+  t.equal(validateBooleanStub.called, true, 'should invoke "boolean" validator');
   t.end();
 });

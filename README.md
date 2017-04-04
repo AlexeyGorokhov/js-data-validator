@@ -55,6 +55,7 @@ if (errors.length) {
   - [integer([msg])](#integermsg)
     - [integer.max(value, [msg])](#integermaxvalue-msg)
     - [integer.min(value, [msg])](#integerminvalue-msg)
+  - [boolean()](#boolean)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -127,7 +128,7 @@ Creates validation rule for not allowing the array to be empty.
 
 Generates a schema to validate/normalize a string.
 
-Any validated value is coerced to a string using `String` constructor function.
+Any validated value is coerced to a string using `String()` constructor function.
 
 ##### string.notEmpty([msg])
 
@@ -167,3 +168,9 @@ Creates validation rule for a value to be greater or equal to the passed minimum
 * `value {Integer}` - Minimum value to compare with.
 
 * `msg {String}` - Optional error message. Defaults to an empty string.
+
+#### boolean()
+
+Generates a schema to validate/normalize a boolean value.
+
+Any validated value is coerced to a string using `Boolean()` constructor function.
