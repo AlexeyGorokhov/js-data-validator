@@ -1,5 +1,11 @@
 # Change Log
 
+## [0.4.1] - 2017-04-05
+
+### Fix
+
+* `object()` is now itself an object key
+
 ## [0.4.0] - 217-04-04
 
 ### New features
