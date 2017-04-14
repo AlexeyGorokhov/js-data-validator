@@ -52,6 +52,8 @@ if (errors.length) {
     - [array.notEmpty([msg])](#arraynotemptymsg)
   - [string()](#string)
     - [string.notEmpty([msg])](#stringnotemptymsg)
+    - [string.transform(fn)](#stringtransformfn)
+    - [string.validate(fn, [msg])](#stringvalidatefn-msg)
   - [integer([msg])](#integermsg)
     - [integer.max(value, [msg])](#integermaxvalue-msg)
     - [integer.min(value, [msg])](#integerminvalue-msg)
@@ -135,6 +137,36 @@ Any validated value is coerced to a string using `String()` constructor function
 Creates validation rule for not allowing the string to be empty.
 
 * `msg {String}` - Optional error message. Defaults to an empty string.
+
+##### string.transform(fn)
+
+Creates transformation rule.
+
+Transformation is applied before `validate` but after `notEmpty`.
+
+* `fn {Function}` - User defined transformation function. The function is passed the string and supposed to return the transformed string. If `fn` is undefined or not a function, no transformation is applied.
+
+Example:
+
+```javascript
+const myTransformFn = val => val + 'a';
+const schema = Jdv.string().transform(myTransformFn);
+```
+
+##### string.validate(fn, [msg])
+
+Creates user defined validation rule.
+
+* `fn {Function}` - User defined validation function. The function is passed the string and supposed to return any value. If the returned value is falsey, validation failes. If `fn` is undefined or not a function, validation always succeeds.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+Example:
+
+```javascript
+const myValidationFn = val => val === 'abc';
+const schema = Jdv.string().validate(myValidationFn, 'expected "abc" string');
+```
 
 #### integer([msg])
 

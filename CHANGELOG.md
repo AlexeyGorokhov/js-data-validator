@@ -1,5 +1,13 @@
 # Change Log
 
+## [0.5.0] - 217-04-14
+
+### New features
+
+* `string.transform(fn)` transformation rule
+
+* `string.validate(fn, [msg])` validation rule
+
 ## [0.4.1] - 2017-04-05
 
 ### Fix
