@@ -1,6 +1,6 @@
 {
   "name": "js-data-validator",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Data validator and normalizer",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "proxyquire": "^1.7.11",
-    "semistandard": "^10.0.0",
-    "sinon": "^1.17.7",
+    "semistandard": "^11.0.0",
+    "sinon": "^2.2.0",
     "tap-summary": "^3.0.1",
     "tape": "^4.6.3"
   },

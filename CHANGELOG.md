@@ -1,12 +1,18 @@
 # Change Log
 
-## [0.5.1] - 217-04-17
+## [0.6.0] - 2017-05-28
+
+### New features
+
+* `object.keysCaseInsensitive()` validation rule
+
+## [0.5.1] - 2017-04-17
 
 ### Hot fix
 
 * `string.transform(fn)` and `string.validate(fn, [msg])` broke the entire `string()` validator
 
-## [0.5.0] - 217-04-14
+## [0.5.0] - 2017-04-14
 
 ### New features
 

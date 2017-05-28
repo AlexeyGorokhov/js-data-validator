@@ -1,52 +1,25 @@
 'use strict';
 
 const test = require('tape');
+const proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 const sinon = require('sinon');
 
 const moduleName = 'lib/validators/object';
-const self = require(`../../../${moduleName}`);
-const errorsStub = [];
 
-test(`${moduleName} > data object has more props than described in schema`, t => {
-  const schemaStub = {
-    objectProps: {
-      a: 'some_val',
-      b: 'some_val'
-    }
-  };
-  const FIXED_VAL = [];
-  const dataStub = {
-    a: 'some_val',
-    b: 'some_val',
-    c: FIXED_VAL
-  };
-  const nextStub = sinon.spy();
-
-  const result = self(schemaStub, dataStub, errorsStub, nextStub);
-
-  t.equal(nextStub.callCount, 2, 'should not invoke validation for props missing in schema');
-  t.equal(result.c, FIXED_VAL, 'should not mutate unvalidated props');
-  t.end();
+const getSelf = ({
+  mapSchemaKeysToDataKeysStub = () => ({
+    schemaKeysToDataKeys: new Map(),
+    restDataKeys: []
+  })
+} = {}) => proxyquire(`../../../${moduleName}`, {
+  '../util/map-schema-keys-to-data-keys': mapSchemaKeysToDataKeysStub
 });
 
-test(`${moduleName} > data does not have a prop existing in schema`, t => {
-  const schemaStub = {
-    objectProps: { a: 'some_val' }
-  };
-  const dataStub = {};
-  const nextStub = sinon.spy();
-
-  self(schemaStub, dataStub, errorsStub, nextStub);
-
-  t.equal(nextStub.called, false, 'should not try to validate missing prop');
-  t.end();
-});
-
-test(`${moduleName} > missing data prop is required`, t => {
-  const ERR_MSG = 'err_msg';
+test(`${moduleName} > missing key is required`, t => {
+  const ERR_MSG = Symbol('err_msg');
   const schemaStub = {
     objectProps: {
-      a: {
+      'propOne': {
         isRequired: true,
         isRequiredMsg: ERR_MSG
       }
@@ -54,40 +27,29 @@ test(`${moduleName} > missing data prop is required`, t => {
   };
   const dataStub = {};
   const errorsStub = [];
-  let nextStub;
+  const nextStub = sinon.spy();
+  const self = getSelf({
+    mapSchemaKeysToDataKeysStub: () => ({
+      schemaKeysToDataKeys: new Map([['propOne', null]]),
+      restDataKeys: []
+    })
+  });
 
-  self(schemaStub, dataStub, errorsStub, nextStub);
+  const returnVal = self(schemaStub, dataStub, errorsStub, nextStub);
 
-  t.equal(errorsStub.includes(ERR_MSG), true, 'should add error message');
+  t.equal(errorsStub.includes(ERR_MSG), true, 'should put error into errors collection');
+  t.equal(returnVal.hasOwnProperty('propOne'), false,
+    'should not include the prop into the normalized data');
+  t.equal(nextStub.called, false, 'should not invoke deep validation');
   t.end();
 });
 
-test(`${moduleName} > missing data prop is defaulted`, t => {
-  const DEFAULT_VAL = 'dafault_val';
+test(`${moduleName} > missing key is defaulted`, t => {
+  const ERR_MSG = Symbol('err_msg');
+  const DEFAULT_VAL = Symbol('default_val');
   const schemaStub = {
     objectProps: {
-      a: {
-        isDefaulted: true,
-        defaultVal: DEFAULT_VAL
-      }
-    }
-  };
-  const dataStub = {};
-  let nextStub;
-
-  const result = self(schemaStub, dataStub, errorsStub, nextStub);
-
-  t.equal(result.a, DEFAULT_VAL, 'should assign default value to the prop');
-  t.end();
-});
-
-test(`${moduleName} > missing data prop is defaulted and required`, t => {
-  const ERR_MSG = 'err_msg';
-  const DEFAULT_VAL = 'dafault_val';
-  const schemaStub = {
-    objectProps: {
-      a: {
-        isRequired: true,
+      'propOne': {
         isRequiredMsg: ERR_MSG,
         isDefaulted: true,
         defaultVal: DEFAULT_VAL
@@ -96,11 +58,73 @@ test(`${moduleName} > missing data prop is defaulted and required`, t => {
   };
   const dataStub = {};
   const errorsStub = [];
-  let nextStub;
+  const nextStub = sinon.spy();
+  const self = getSelf({
+    mapSchemaKeysToDataKeysStub: () => ({
+      schemaKeysToDataKeys: new Map([['propOne', null]]),
+      restDataKeys: []
+    })
+  });
 
-  const result = self(schemaStub, dataStub, errorsStub, nextStub);
+  const returnVal = self(schemaStub, dataStub, errorsStub, nextStub);
 
-  t.equal(errorsStub.includes(ERR_MSG), true, 'should add error message');
-  t.equal(result.hasOwnProperty('a'), false, 'should not add the prop with default value');
+  t.equal(errorsStub.includes(ERR_MSG), false, 'should not put error into errors collection');
+  t.equal(returnVal['propOne'], DEFAULT_VAL,
+    'should include the prop into the normalized data with default value');
+  t.equal(nextStub.called, false, 'should not invoke deep validation');
+  t.end();
+});
+
+test(`${moduleName} > key is present`, t => {
+  const VAL = Symbol('val');
+  const ERR_MSG = Symbol('err_msg');
+  const schemaStub = {
+    objectProps: {
+      'propOne': {
+        isRequired: true,
+        isRequiredMsg: ERR_MSG,
+        isDefaulted: true
+      }
+    }
+  };
+  const dataStub = { propone: VAL };
+  const errorsStub = [];
+  const nextStub = sinon.spy(() => VAL);
+  const self = getSelf({
+    mapSchemaKeysToDataKeysStub: () => ({
+      schemaKeysToDataKeys: new Map([['propOne', 'propone']]),
+      restDataKeys: []
+    })
+  });
+
+  const returnVal = self(schemaStub, dataStub, errorsStub, nextStub);
+
+  t.equal(errorsStub.includes(ERR_MSG), false, 'should not put error into errors collection');
+  t.equal(returnVal['propOne'], VAL,
+    'should include renamed prop into the normalized data');
+  t.equal(nextStub.called, true, 'should invoke deep validation');
+  t.end();
+});
+
+test(`${moduleName} > data has props not described by schema`, t => {
+  const schemaStub = {
+    objectProps: {}
+  };
+  const VAL = Symbol('val');
+  const dataStub = { propTwo: VAL };
+  const errorsStub = [];
+  const nextStub = sinon.spy();
+  const self = getSelf({
+    mapSchemaKeysToDataKeysStub: () => ({
+      schemaKeysToDataKeys: new Map(),
+      restDataKeys: ['propTwo']
+    })
+  });
+
+  const returnVal = self(schemaStub, dataStub, errorsStub, nextStub);
+
+  t.equal(returnVal['propTwo'], VAL,
+    'should include the prop into the normalized data');
+  t.equal(nextStub.called, false, 'should not invoke deep validation');
   t.end();
 });
