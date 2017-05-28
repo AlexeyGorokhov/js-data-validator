@@ -48,6 +48,7 @@ if (errors.length) {
     - [object.keys(obj)](#objectkeysobj)
       - [object.key.required([msg])](#objectkeyrequiredmsg)
       - [object.key.defaultsTo([value])](#objectkeydefaultstovalue)
+    - [object.keysCaseInsensitive()](#objectkeyscaseinsensitive)
   - [array({ [schema], [msg] })](#array-schema-msg-)
     - [array.notEmpty([msg])](#arraynotemptymsg)
   - [string()](#string)
@@ -98,6 +99,33 @@ Creates validation rule for a key to be present in the object.
 Creates normalization rule for a missing property in the `data` object to be set to the specified value.
 
 * `value {Any}` - Optional. Value to be assigned to the missing property. Defaults to `null`.
+
+##### object.keysCaseInsensitive()
+
+Creates validation and normalization rule according to which object's keys are treated case insensitively.
+
+Please note that if the data object has several keys that are case insensitively equal, the normalized data object will receive the value of the latest keys.
+
+Example:
+
+```javascript
+const dataToProcess = {
+  aa: 'foo',
+  aA: 'bar',
+  AA: 'baz'
+};
+
+const schema = Jdv.object().keys({
+  aA: Jdv.string()
+}).keysCaseInsensitive();
+
+const { data} = Jdv.validate(schema, dataToProcess);
+
+console.dir(data);
+// { aA: 'baz' }
+// Note that the normalized key name is as it is described by the schema, and its value is set
+// to the value of the last case insensitively equal keys.
+```
 
 #### array({ [schema], [msg] })
 
@@ -205,4 +233,4 @@ Creates validation rule for a value to be greater or equal to the passed minimum
 
 Generates a schema to validate/normalize a boolean value.
 
-Any validated value is coerced to a string using `Boolean()` constructor function.
+Before being validated, the value is coerced to a boolean using `Boolean()` constructor function.
