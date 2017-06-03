@@ -11,13 +11,15 @@ const getSelf = ({
   validateArrayStub = () => {},
   validateStringStub = () => {},
   validateIntegerStub = () => {},
-  validateBooleanStub = () => {}
+  validateBooleanStub = () => {},
+  validateISODateStringStub = () => {}
 }) => proxyquire(`../../${moduleName}`, {
   './validators/object': validateObjectStub,
   './validators/array': validateArrayStub,
   './validators/string': validateStringStub,
   './validators/integer': validateIntegerStub,
-  './validators/boolean': validateBooleanStub
+  './validators/boolean': validateBooleanStub,
+  './validators/iso-date-string': validateISODateStringStub
 });
 
 test(`${moduleName} > called with "object" schema`, t => {
@@ -72,5 +74,16 @@ test(`${moduleName} > called with "boolean" schema`, t => {
   self(schemaStub);
 
   t.equal(validateBooleanStub.called, true, 'should invoke "boolean" validator');
+  t.end();
+});
+
+test(`${moduleName} > called with "isoDateString" schema`, t => {
+  const validateISODateStringStub = sinon.spy();
+  const schemaStub = { type: 'isoDateString' };
+  const self = getSelf({ validateISODateStringStub });
+
+  self(schemaStub);
+
+  t.equal(validateISODateStringStub.called, true, 'should invoke "isoDateString" validator');
   t.end();
 });

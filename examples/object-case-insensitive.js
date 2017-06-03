@@ -12,7 +12,7 @@ const schema = Jdv.object().keys({
   aA: Jdv.string()
 }).keysCaseInsensitive();
 
-const { data} = Jdv.validate(schema, dataToProcess);
+const { data } = Jdv.validate(schema, dataToProcess);
 
 console.dir(data);
 // { aA: 'baz' }

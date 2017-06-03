@@ -8,6 +8,7 @@ const ArrayStamp = require('./lib/array');
 const StringStamp = require('./lib/string');
 const IntegerStamp = require('./lib/integer');
 const BooleanStamp = require('./lib/boolean');
+const ISODateStringStamp = require('./lib/iso-date-string');
 
 /**
  * Root exported object
@@ -18,7 +19,8 @@ module.exports = {
   array,
   string,
   integer,
-  boolean
+  boolean,
+  ISODateString
 };
 
 function object () {
@@ -51,5 +53,12 @@ function integer (msg = '') {
 function boolean () {
   return Object.assign(stampit().compose(BooleanStamp).create(), {
     type: 'boolean'
+  });
+}
+
+function ISODateString (msg = '') {
+  return Object.assign(stampit().compose(ISODateStringStamp).create(), {
+    type: 'isoDateString',
+    notISODateStringErrorMessage: msg
   });
 }

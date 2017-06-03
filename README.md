@@ -59,6 +59,7 @@ if (errors.length) {
     - [integer.max(value, [msg])](#integermaxvalue-msg)
     - [integer.min(value, [msg])](#integerminvalue-msg)
   - [boolean()](#boolean)
+  - [ISODateString([msg])](#isodatestringmsg)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -209,7 +210,7 @@ Example:
 ```javascript
 const schema = Jdv.integer('my custom error message in case the value is not an integer')
                   .max(100, 'my custom error message in case it is greater')
-                  .max(0, 'my custom error message in case it is less');
+                  .min(0, 'my custom error message in case it is less');
 });
 ```
 
@@ -234,3 +235,12 @@ Creates validation rule for a value to be greater or equal to the passed minimum
 Generates a schema to validate/normalize a boolean value.
 
 Before being validated, the value is coerced to a boolean using `Boolean()` constructor function.
+
+
+#### ISODateString([msg])
+
+Generates a schema to validate a string to be a correct UTC date representation in format `YYYY-MM-DDTHH:MM:SS.sssZ`.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+If validation fails, the method normalizes the value to `null`.
