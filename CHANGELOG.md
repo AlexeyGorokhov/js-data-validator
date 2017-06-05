@@ -1,10 +1,16 @@
 # Change Log
 
+## [1.1.0] - 2017-06-05
+
+### New features
+
+* `number([msg])` validation rule
+
 ## [1.0.0] - 2017-06-03
 
 ### New features
 
-* `object.ISODateString([msg])` validation rule
+* `ISODateString([msg])` validation rule
 
 ## [0.6.0] - 2017-05-28
 

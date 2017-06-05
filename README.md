@@ -58,6 +58,9 @@ if (errors.length) {
   - [integer([msg])](#integermsg)
     - [integer.max(value, [msg])](#integermaxvalue-msg)
     - [integer.min(value, [msg])](#integerminvalue-msg)
+  - [number([msg])](#numbermsg)
+    - [number.max(value, [msg])](#numbermaxvalue-msg)
+    - [number.min(value, [msg])](#numberminvalue-msg)
   - [boolean()](#boolean)
   - [ISODateString([msg])](#isodatestringmsg)
 
@@ -229,6 +232,34 @@ Creates validation rule for a value to be greater or equal to the passed minimum
 * `value {Integer}` - Minimum value to compare with.
 
 * `msg {String}` - Optional error message. Defaults to an empty string.
+
+
+
+#### number([msg])
+
+Generates a schema to validate/normalize a number value.
+
+Any validated value is tried to be parsed into a number.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+##### number.max(value, [msg])
+
+Creates validation rule for a value to be less or equal to the passed maximum value.
+
+* `value {Number}` - Maximum value to compare with.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+##### number.min(value, [msg])
+
+Creates validation rule for a value to be greater or equal to the passed minimum value.
+
+* `value {Number}` - Minimum value to compare with.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+
 
 #### boolean()
 

@@ -7,6 +7,7 @@ const ObjectStamp = require('./lib/object');
 const ArrayStamp = require('./lib/array');
 const StringStamp = require('./lib/string');
 const IntegerStamp = require('./lib/integer');
+const NumberStamp = require('./lib/number');
 const BooleanStamp = require('./lib/boolean');
 const ISODateStringStamp = require('./lib/iso-date-string');
 
@@ -19,6 +20,7 @@ module.exports = {
   array,
   string,
   integer,
+  number,
   boolean,
   ISODateString
 };
@@ -47,6 +49,13 @@ function integer (msg = '') {
   return Object.assign(stampit().compose(IntegerStamp).create(), {
     type: 'integer',
     notIntegerErrorMessage: msg
+  });
+}
+
+function number (msg = '') {
+  return Object.assign(stampit().compose(NumberStamp).create(), {
+    type: 'number',
+    notNumberErrorMessage: msg
   });
 }
 
