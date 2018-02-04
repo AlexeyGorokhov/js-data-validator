@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.2.0] - 2017-06-05
+
+### New features
+
+* `uuid([msg])` validation rule
+
 ## [1.1.0] - 2017-06-05
 
 ### New features

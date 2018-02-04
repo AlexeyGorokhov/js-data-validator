@@ -63,6 +63,7 @@ if (errors.length) {
     - [number.min(value, [msg])](#numberminvalue-msg)
   - [boolean()](#boolean)
   - [ISODateString([msg])](#isodatestringmsg)
+  - [uuid([msg])](#uuidmsg)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -271,6 +272,14 @@ Before being validated, the value is coerced to a boolean using `Boolean()` cons
 #### ISODateString([msg])
 
 Generates a schema to validate a string to be a correct UTC date representation in format `YYYY-MM-DDTHH:MM:SS.sssZ`.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+If validation fails, the method normalizes the value to `null`.
+
+#### uuid([msg])
+
+Generates a schema to validate a string to be a correct UUID.
 
 * `msg {String}` - Optional error message. Defaults to an empty string.
 

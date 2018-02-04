@@ -13,7 +13,8 @@ const getSelf = ({
   validateIntegerStub = () => {},
   validateNumberStub = () => {},
   validateBooleanStub = () => {},
-  validateISODateStringStub = () => {}
+  validateISODateStringStub = () => {},
+  validateUuidStub = () => {}
 }) => proxyquire(`../../${moduleName}`, {
   './validators/object': validateObjectStub,
   './validators/array': validateArrayStub,
@@ -21,7 +22,8 @@ const getSelf = ({
   './validators/integer': validateIntegerStub,
   './validators/number': validateNumberStub,
   './validators/boolean': validateBooleanStub,
-  './validators/iso-date-string': validateISODateStringStub
+  './validators/iso-date-string': validateISODateStringStub,
+  './validators/uuid': validateUuidStub
 });
 
 test(`${moduleName} > called with "object" schema`, t => {
@@ -98,5 +100,16 @@ test(`${moduleName} > called with "isoDateString" schema`, t => {
   self(schemaStub);
 
   t.equal(validateISODateStringStub.called, true, 'should invoke "isoDateString" validator');
+  t.end();
+});
+
+test(`${moduleName} > called with "uuid" schema`, t => {
+  const validateUuidStub = sinon.spy();
+  const schemaStub = { type: 'uuid' };
+  const self = getSelf({ validateUuidStub });
+
+  self(schemaStub);
+
+  t.equal(validateUuidStub.called, true, 'should invoke "uuid" validator');
   t.end();
 });

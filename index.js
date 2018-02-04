@@ -10,6 +10,7 @@ const IntegerStamp = require('./lib/integer');
 const NumberStamp = require('./lib/number');
 const BooleanStamp = require('./lib/boolean');
 const ISODateStringStamp = require('./lib/iso-date-string');
+const UuidStamp = require('./lib/uuid');
 
 /**
  * Root exported object
@@ -22,7 +23,8 @@ module.exports = {
   integer,
   number,
   boolean,
-  ISODateString
+  ISODateString,
+  uuid
 };
 
 function object () {
@@ -69,5 +71,12 @@ function ISODateString (msg = '') {
   return Object.assign(stampit().compose(ISODateStringStamp).create(), {
     type: 'isoDateString',
     notISODateStringErrorMessage: msg
+  });
+}
+
+function uuid (msg = '') {
+  return Object.assign(stampit().compose(UuidStamp).create(), {
+    type: 'uuid',
+    notUuidErrorMessage: msg
   });
 }
