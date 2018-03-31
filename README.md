@@ -44,6 +44,7 @@ if (errors.length) {
 
 - [Jdv](#jdv)
   - [validate(schema, data)](#validateschema-data)
+  - [any()](#any)
   - [object()](#object)
     - [object.keys(obj)](#objectkeysobj)
       - [object.key.required([msg])](#objectkeyrequiredmsg)
@@ -82,6 +83,10 @@ Returns `Object` with properties:
 * `data {Any}` - normalized data.
 
 * `errors {Array<String>}` - collection of error messages.
+
+#### any()
+
+Generates a schema that validates any value.
 
 #### object()
 

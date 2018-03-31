@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.3.0] - 2018-03-31
+
+### New features
+
+* Add `any()` validation rule
+
 ## [1.2.0] - 2017-06-05
 
 ### New features

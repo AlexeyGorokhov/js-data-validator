@@ -3,6 +3,7 @@
 const stampit = require('stampit');
 
 const validate = require('./lib/validate');
+const AnyStamp = require('./lib/any');
 const ObjectStamp = require('./lib/object');
 const ArrayStamp = require('./lib/array');
 const StringStamp = require('./lib/string');
@@ -17,6 +18,7 @@ const UuidStamp = require('./lib/uuid');
  */
 module.exports = {
   validate,
+  any,
   object,
   array,
   string,
@@ -26,6 +28,12 @@ module.exports = {
   ISODateString,
   uuid
 };
+
+function any () {
+  return Object.assign(stampit().compose(AnyStamp).create(), {
+    type: 'any'
+  });
+}
 
 function object () {
   return Object.assign(stampit().compose(ObjectStamp).create(), {

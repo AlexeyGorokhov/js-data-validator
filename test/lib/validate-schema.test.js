@@ -7,6 +7,7 @@ const sinon = require('sinon');
 const moduleName = 'lib/validate-schema';
 
 const getSelf = ({
+  validateAnyStub = () => {},
   validateObjectStub = () => {},
   validateArrayStub = () => {},
   validateStringStub = () => {},
@@ -16,6 +17,7 @@ const getSelf = ({
   validateISODateStringStub = () => {},
   validateUuidStub = () => {}
 }) => proxyquire(`../../${moduleName}`, {
+  './validators/any': validateAnyStub,
   './validators/object': validateObjectStub,
   './validators/array': validateArrayStub,
   './validators/string': validateStringStub,
@@ -24,6 +26,17 @@ const getSelf = ({
   './validators/boolean': validateBooleanStub,
   './validators/iso-date-string': validateISODateStringStub,
   './validators/uuid': validateUuidStub
+});
+
+test(`${moduleName} > called with "any" schema`, t => {
+  const validateAnyStub = sinon.spy();
+  const schemaStub = { type: 'any' };
+  const self = getSelf({ validateAnyStub });
+
+  self(schemaStub);
+
+  t.equal(validateAnyStub.called, true, 'should invoke "ant" validator');
+  t.end();
 });
 
 test(`${moduleName} > called with "object" schema`, t => {
