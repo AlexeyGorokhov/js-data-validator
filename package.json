@@ -1,6 +1,6 @@
 {
   "name": "js-data-validator",
-  "version": "1.3.0",
+  "version": "0.0.0",
   "description": "Data validator and normalizer",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,7 @@
   },
   "author": {
     "name": "Alexey Gorokhov",
-    "email": "alexey.gorokhov@icloud.com",
-    "url": ""
+    "email": "alexey.gorokhov@icloud.com"
   },
   "license": "MIT",
   "keywords": [

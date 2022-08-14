@@ -6,6 +6,7 @@ const validate = require('./lib/validate');
 const AnyStamp = require('./lib/any');
 const ObjectStamp = require('./lib/object');
 const ArrayStamp = require('./lib/array');
+const RecordStamp = require('./lib/record');
 const StringStamp = require('./lib/string');
 const IntegerStamp = require('./lib/integer');
 const NumberStamp = require('./lib/number');
@@ -21,6 +22,7 @@ module.exports = {
   any,
   object,
   array,
+  record,
   string,
   integer,
   number,
@@ -46,6 +48,15 @@ function array ({ schema = null, msg = '' } = {}) {
     type: 'array',
     schemaForItems: schema,
     notArrayErrorMessage: msg
+  });
+}
+
+function record ({ schemaForKey = null, schemaForValue = null, msg = '' } = {}) {
+  return Object.assign(stampit().compose(RecordStamp).create(), {
+    type: 'record',
+    schemaForKey,
+    schemaForValue,
+    notRecordErrorMessage: msg
   });
 }
 

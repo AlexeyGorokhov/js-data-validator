@@ -42,29 +42,35 @@ if (errors.length) {
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [Jdv](#jdv)
-  - [validate(schema, data)](#validateschema-data)
-  - [any()](#any)
-  - [object()](#object)
-    - [object.keys(obj)](#objectkeysobj)
-      - [object.key.required([msg])](#objectkeyrequiredmsg)
-      - [object.key.defaultsTo([value])](#objectkeydefaultstovalue)
-    - [object.keysCaseInsensitive()](#objectkeyscaseinsensitive)
-  - [array({ [schema], [msg] })](#array-schema-msg-)
-    - [array.notEmpty([msg])](#arraynotemptymsg)
-  - [string()](#string)
-    - [string.notEmpty([msg])](#stringnotemptymsg)
-    - [string.transform(fn)](#stringtransformfn)
-    - [string.validate(fn, [msg])](#stringvalidatefn-msg)
-  - [integer([msg])](#integermsg)
-    - [integer.max(value, [msg])](#integermaxvalue-msg)
-    - [integer.min(value, [msg])](#integerminvalue-msg)
-  - [number([msg])](#numbermsg)
-    - [number.max(value, [msg])](#numbermaxvalue-msg)
-    - [number.min(value, [msg])](#numberminvalue-msg)
-  - [boolean()](#boolean)
-  - [ISODateString([msg])](#isodatestringmsg)
-  - [uuid([msg])](#uuidmsg)
+- [js-data-validator](#js-data-validator)
+  - [Introduction](#introduction)
+  - [Example](#example)
+  - [API Reference](#api-reference)
+    - [Jdv](#jdv)
+      - [validate(schema, data)](#validateschema-data)
+      - [any()](#any)
+      - [object()](#object)
+        - [object.keys(obj)](#objectkeysobj)
+          - [object.key.required([msg])](#objectkeyrequiredmsg)
+          - [object.key.defaultsTo([value])](#objectkeydefaultstovalue)
+        - [object.keysCaseInsensitive()](#objectkeyscaseinsensitive)
+      - [array({ [schema], [msg] })](#array-schema-msg-)
+        - [array.notEmpty([msg])](#arraynotemptymsg)
+      - [record({ [schemaForKey], [schemaForValue], [msg] })](#record-schemaforkey-schemaforvalue-msg-)
+        - [record.notEmpty([msg])](#recordnotemptymsg)
+      - [string()](#string)
+        - [string.notEmpty([msg])](#stringnotemptymsg)
+        - [string.transform(fn)](#stringtransformfn)
+        - [string.validate(fn, [msg])](#stringvalidatefn-msg)
+      - [integer([msg])](#integermsg)
+        - [integer.max(value, [msg])](#integermaxvalue-msg)
+        - [integer.min(value, [msg])](#integerminvalue-msg)
+      - [number([msg])](#numbermsg)
+        - [number.max(value, [msg])](#numbermaxvalue-msg)
+        - [number.min(value, [msg])](#numberminvalue-msg)
+      - [boolean()](#boolean)
+      - [ISODateString([msg])](#isodatestringmsg)
+      - [uuid([msg])](#uuidmsg)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -161,6 +167,34 @@ const schema = Jdv.object().keys({
 ##### array.notEmpty([msg])
 
 Creates validation rule for not allowing the array to be empty.
+
+* `msg {String}` - Optional error message. Defaults to an empty string.
+
+#### record({ [schemaForKey], [schemaForValue], [msg] })
+
+Generates a schema to validate/normalize a record of key-value pairs (think of TypeScript's type `Record<K, V>`).
+
+* `opts {Object}` - Optional. Options:
+
+  * `schemaForKey {Object}` - Optional. Validation schema to be applied to each key of the record. If no schema passed, keys are not validated/normalized.
+
+  * `schemaForValue {Object}` - Optional. Validation schema to be applied to each value of the record. If no schema passed, values are not validated/normalized.
+
+  * `msg {String}` - Optional. Error message to be included in the returned errors collection in case the passed data is not a record. Defaults to an empty string.
+
+Example:
+
+```javascript
+const schema = Jdv.record({
+  schemaForKey: Jdv.uuid('keys must be UUIDs'),
+  schemaForValue: Jdv.ISODateString('valus must be ISO date strings'),
+  msg: 'expected a record'
+}).notEmpty('record must not be empty');
+```
+
+##### record.notEmpty([msg])
+
+Creates validation rule for not allowing the record to be empty.
 
 * `msg {String}` - Optional error message. Defaults to an empty string.
 
