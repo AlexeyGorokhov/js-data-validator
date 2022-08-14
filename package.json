@@ -1,6 +1,6 @@
 {
   "name": "js-data-validator",
-  "version": "0.0.0",
+  "version": "1.4.0",
   "description": "Data validator and normalizer",
   "main": "index.js",
   "scripts": {
