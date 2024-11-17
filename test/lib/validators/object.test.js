@@ -128,3 +128,29 @@ test(`${moduleName} > data has props not described by schema`, t => {
   t.equal(nextStub.called, false, 'should not invoke deep validation');
   t.end();
 });
+
+test(`${moduleName} > key is nullable`, t => {
+  const schemaStub = {
+    objectProps: {
+      'propOne': {
+        isNullable: true
+      }
+    }
+  };
+  const dataStub = { propOne: null };
+  const errorsStub = [];
+  const nextStub = sinon.spy();
+  const self = getSelf({
+    mapSchemaKeysToDataKeysStub: () => ({
+      schemaKeysToDataKeys: new Map([['propOne', 'propOne']]),
+      restDataKeys: []
+    })
+  });
+
+  const returnVal = self(schemaStub, dataStub, errorsStub, nextStub);
+
+  t.equal(errorsStub.length, 0, 'should not put any error into errors collection');
+  t.equal(returnVal.propOne, null, 'should keep null value in the key');
+  t.equal(nextStub.called, false, 'should not invoke deep validation');
+  t.end();
+});
