@@ -19,11 +19,14 @@ const schema = Jdv.object().keys({
   userName: Jdv.string().required('my custom error message about missing "userName"'),
   password: Jdv.string().required('my custom error message about missing "password"')
                         .notEmpty('my custom error message about empty "password"'),
-  avatarUrl: Jdv.string().defaultsTo('http://example.com/avatars/default')
+  avatarUrl: Jdv.string().defaultsTo('http://example.com/avatars/default'),
+  bonuses: Jdv.integer('my custom error message about "bonuses" being non-integer')
+              .nullable()
 });
 
 const incomingData = {
-  userName: 'John Smith'
+  userName: 'John Smith',
+  bonuses: null
 };
 
 const { data, errors } = Jdv.validate(schema, incomingData);
@@ -51,26 +54,27 @@ if (errors.length) {
       - [any()](#any)
       - [object()](#object)
         - [object.keys(obj)](#objectkeysobj)
-          - [object.key.required([msg])](#objectkeyrequiredmsg)
-          - [object.key.defaultsTo([value])](#objectkeydefaultstovalue)
+          - [object.key.required(\[msg\])](#objectkeyrequiredmsg)
+          - [object.key.defaultsTo(\[value\])](#objectkeydefaultstovalue)
+          - [object.key.nullable()](#objectkeynullable)
         - [object.keysCaseInsensitive()](#objectkeyscaseinsensitive)
-      - [array({ [schema], [msg] })](#array-schema-msg-)
-        - [array.notEmpty([msg])](#arraynotemptymsg)
-      - [record({ [schemaForKey], [schemaForValue], [msg] })](#record-schemaforkey-schemaforvalue-msg-)
-        - [record.notEmpty([msg])](#recordnotemptymsg)
+      - [array({ \[schema\], \[msg\] })](#array-schema-msg-)
+        - [array.notEmpty(\[msg\])](#arraynotemptymsg)
+      - [record({ \[schemaForKey\], \[schemaForValue\], \[msg\] })](#record-schemaforkey-schemaforvalue-msg-)
+        - [record.notEmpty(\[msg\])](#recordnotemptymsg)
       - [string()](#string)
-        - [string.notEmpty([msg])](#stringnotemptymsg)
+        - [string.notEmpty(\[msg\])](#stringnotemptymsg)
         - [string.transform(fn)](#stringtransformfn)
-        - [string.validate(fn, [msg])](#stringvalidatefn-msg)
-      - [integer([msg])](#integermsg)
-        - [integer.max(value, [msg])](#integermaxvalue-msg)
-        - [integer.min(value, [msg])](#integerminvalue-msg)
-      - [number([msg])](#numbermsg)
-        - [number.max(value, [msg])](#numbermaxvalue-msg)
-        - [number.min(value, [msg])](#numberminvalue-msg)
+        - [string.validate(fn, \[msg\])](#stringvalidatefn-msg)
+      - [integer(\[msg\])](#integermsg)
+        - [integer.max(value, \[msg\])](#integermaxvalue-msg)
+        - [integer.min(value, \[msg\])](#integerminvalue-msg)
+      - [number(\[msg\])](#numbermsg)
+        - [number.max(value, \[msg\])](#numbermaxvalue-msg)
+        - [number.min(value, \[msg\])](#numberminvalue-msg)
       - [boolean()](#boolean)
-      - [ISODateString([msg])](#isodatestringmsg)
-      - [uuid([msg])](#uuidmsg)
+      - [ISODateString(\[msg\])](#isodatestringmsg)
+      - [uuid(\[msg\])](#uuidmsg)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -115,6 +119,10 @@ Creates validation rule for a key to be present in the object.
 Creates normalization rule for a missing property in the `data` object to be set to the specified value.
 
 * `value {Any}` - Optional. Value to be assigned to the missing property. Defaults to `null`.
+
+###### object.key.nullable()
+
+Creates validation rule for a key to allow it contain `null` value.
 
 ##### object.keysCaseInsensitive()
 

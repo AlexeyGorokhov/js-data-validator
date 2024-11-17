@@ -35,7 +35,7 @@ test(`${moduleName} > called with "any" schema`, t => {
 
   self(schemaStub);
 
-  t.equal(validateAnyStub.called, true, 'should invoke "ant" validator');
+  t.equal(validateAnyStub.called, true, 'should invoke "any" validator');
   t.end();
 });
 
