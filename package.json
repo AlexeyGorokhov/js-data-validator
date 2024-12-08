@@ -2,9 +2,18 @@
   "name": "js-data-validator",
   "version": "0.0.0",
   "description": "Data validator and normalizer",
-  "main": "index.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "semistandard && node_modules/.bin/tape 'test/**/*.js' | tap-summary"
+    "test": "eslint ./ && npm run tsc",
+    "tsc": "tsc --noEmit"
   },
   "author": {
     "name": "Alexey Gorokhov",
@@ -24,13 +33,14 @@
     "url": "https://github.com/AlexeyGorokhov/js-data-validator/issues"
   },
   "devDependencies": {
-    "proxyquire": "^2.0.1",
-    "semistandard": "^12.0.0",
-    "sinon": "^4.2.2",
-    "tap-summary": "^4.0.0",
-    "tape": "^4.8.0"
+    "@memnrev/eslint-v9-config": "^0.1.1",
+    "@microsoft/api-extractor": "^7.48.0",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "@types/node": "^22.10.1",
+    "eslint": "^9.8.0",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
-    "stampit": "^4.0.2"
+    "stampit": "^5.0.4-next"
   }
 }

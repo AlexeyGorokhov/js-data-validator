@@ -1,6 +1,4 @@
-'use strict';
-
-const stampit = require('stampit');
+import stampit from 'stampit';
 
 const validate = require('./lib/validate');
 const AnyStamp = require('./lib/any');
